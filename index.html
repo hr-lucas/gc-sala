@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conectando ao servidor…</title>
+<style>
+  body { font-family: system-ui, sans-serif; background:#16181d; color:#e8e8e8; display:flex; min-height:100vh; align-items:center; justify-content:center; margin:0; }
+  .card { text-align:center; padding:24px; max-width:420px; }
+  a.btn { display:inline-block; margin-top:16px; padding:12px 20px; background:#f5a623; color:#000; border-radius:8px; font-weight:700; text-decoration:none; }
+  code { display:block; margin-top:16px; padding:10px; background:#0f1115; border-radius:6px; user-select:all; word-break:break-all; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h2>Abrindo o CS…</h2>
+  <p>Se não abrir sozinho, clique no botão abaixo.</p>
+  <a class="btn" id="btn" href="#">▶ Conectar ao servidor</a>
+  <code id="cmd"></code>
+</div>
+<script>
+  const p = new URLSearchParams(location.search);
+  const ip = (p.get("ip") || "").replace(/[^\d.:]/g, "");
+  const pw = (p.get("pw") || "").replace(/[^\w-]/g, "");
+  if (ip) {
+    const steam = `steam://connect/${ip}${pw ? "/" + pw : ""}`;
+    document.getElementById("btn").href = steam;
+    document.getElementById("cmd").textContent = `connect ${ip}${pw ? ";password " + pw : ""}`;
+    location.href = steam;
+  } else {
+    document.querySelector("h2").textContent = "Link inválido";
+  }
+</script>
+</body>
+</html>
